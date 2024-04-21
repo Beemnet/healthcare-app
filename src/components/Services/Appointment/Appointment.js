@@ -1,21 +1,22 @@
-import { DateTimePicker, LocalizationProvider, MobileDateTimePicker } from '@mui/lab';
 import { Box, Button, Container, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import TimePicker from 'react-time-picker';
+import 'react-time-picker/dist/TimePicker.css';
 import swal from 'sweetalert';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import useAuth from '../../../Hooks/useAuth';
 import { SHA256 } from 'crypto-js';
-import { DatePicker } from '@mui/lab';
-import { StaticTimePicker, AdapterDateFns } from '@mui/x-date-pickers';
 
 const Appointment = () => {
   const { user } = useAuth();
 
-  const [clearedDate, setClearedDate] = useState(null);
-  const [value, setValue] = useState(new Date());
-
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState('12:00'); // Default time value
   const [docName, setDocName] = useState('');
   const [problem, setProblem] = useState('');
+
 
   const handleChange = (event) => {
     setDocName(event.target.value);
@@ -31,16 +32,16 @@ const Appointment = () => {
               patientName: user.displayName,
               patientEmail: user.email,
               problem: problem,
-              appointmentDate: value.toISOString().substring(0, 10),
-              appointmentTime: value.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              appointmentDate: selectedDate.toISOString().substring(0, 10),
+              appointmentTime: selectedTime,
             })).toString(),
             
             doctor: docName,
             patientName: user.displayName,
             patientEmail: user.email,
             problem: problem,
-            appointmentDate: value.toISOString().substring(0, 10),
-            appointmentTime: value.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            appointmentDate: selectedDate.toISOString().substring(0, 10),
+            appointmentTime: selectedTime,
         };
 
       const request = {
@@ -140,29 +141,19 @@ const Appointment = () => {
           value={user.email}
           disabled
         />
-{/* 
-        <Stack spacing={3}>
+
+        <form onSubmit={handleSubmit}>
           <DatePicker
-            value={value}
-            onChange={(newValue) => {
-              setValue(newValue);
-            }}
-            label="Appointment Date"
-            onError={console.log}
-            minDate={new Date('2018-01-01T00:00')}
-            inputFormat="yyyy/MM/dd"
-            renderInput={(params) => <TextField {...params} />}
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            placeholderText="Select a date"
           />
-          <StaticTimePicker
-            value={value}
-            onChange={(newValue) => {
-              setValue(newValue);
-            }}
-            label="Appointment Time"
-            onError={console.log}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </Stack> */}
+
+          <TimePicker
+            value={selectedTime}
+            onChange={(time) => setSelectedTime(time)}
+          />          
+        </form>
 
         <TextField
           sx={{ mt: 2, mb: 2 }}
@@ -187,3 +178,4 @@ const Appointment = () => {
 };
 
 export default Appointment;
+
