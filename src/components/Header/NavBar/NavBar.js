@@ -203,7 +203,7 @@ const Navbar = () => {
                             
                             <HashLink
                                 className="text-style text-style-fullscrn "
-                                smooth to='/view-appointment#view-appointments'>
+                                smooth to='/view-appointments#view-appointments'>
                                 <Button
 
                                     sx={{ my: 2, color: 'white', display: 'block' }}

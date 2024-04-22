@@ -167,7 +167,9 @@ const Appointment = () => {
             placeholderText="Select a date"
             className="date-picker"
           />
-        
+        </Container>
+        <Container maxWidth="sm" sx={{ mt: 2, mb: 2, ml: 5, mr: 5 }}>
+
           <TimePicker
             value={selectedTime}
             onChange={(time) => setSelectedTime(time)}
