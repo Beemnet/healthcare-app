@@ -97,7 +97,7 @@ const Appointment = () => {
       <Container maxWidth="xl">
         <Typography variant='h6' sx={{
           mt: 5, mb: 5
-        }}>Select your time and data for Appointment</Typography>
+        }}>Enter your appointment details</Typography>
 
         <FormControl sx={{ mb: 5, minWidth: '50%' }}>
           <InputLabel id="demo-simple-select-autowidth-label">Select Doctor Name</InputLabel>
@@ -142,18 +142,49 @@ const Appointment = () => {
           disabled
         />
 
-        <form onSubmit={handleSubmit}>
+        {/* <form onSubmit={handleSubmit}>
           <DatePicker
+            sx={{ mt: 2, mb: 2 }}
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}
             placeholderText="Select a date"
           />
 
           <TimePicker
+            sx={{ mt: 2, mb: 2 }}
             value={selectedTime}
             onChange={(time) => setSelectedTime(time)}
           />          
+        </form> */}
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+      }}
+    >
+      <Container maxWidth="sm">
+        <Typography variant='h6' sx={{ mt: 5, mb: 5 }}>Schedule Appointment</Typography>
+
+        <form onSubmit={handleSubmit}>
+          <DatePicker
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            dateFormat="dd/MM/yyyy"
+            placeholderText="Select a date"
+            className="date-picker"
+          />
+
+          <TimePicker
+            value={selectedTime}
+            onChange={(time) => setSelectedTime(time)}
+            className="time-picker"
+          />
         </form>
+      </Container>
+    </Box>
 
         <TextField
           sx={{ mt: 2, mb: 2 }}
