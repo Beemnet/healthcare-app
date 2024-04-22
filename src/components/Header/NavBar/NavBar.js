@@ -129,6 +129,13 @@ const Navbar = () => {
                                 <MenuItem
                                     bgcolor="primary"
                                     component={HashLink}
+                                    smooth to='/view-prescriptions'
+                                >View Prescriptions
+                                </MenuItem>
+
+                                <MenuItem
+                                    bgcolor="primary"
+                                    component={HashLink}
                                     smooth to='/about#about'
                                 >About
                                 </MenuItem>
