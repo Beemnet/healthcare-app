@@ -69,9 +69,19 @@ const ViewAppointments = () => {
         ) : appointments.length === 0 ? (
           <Typography>No appointments found for {user.displayName}.</Typography>
         ) : (
-          appointments.map(appointment => (
-            <AppointmentItem key={appointment.appointment_id} appointment={appointment} />
-          ))
+          <>
+            {Array.isArray(appointments) && (
+              (() => {
+                const appointmentItems = [];
+                for (let i = 0; i < appointments.length; i++) {
+                  appointmentItems.push(
+                    <AppointmentItem key={appointments[i].appointment_id} appointment={appointments[i]} />
+                  );
+                }
+                return appointmentItems;
+              })()
+            )}
+          </>
         )}
       </Container>
     </Box>
