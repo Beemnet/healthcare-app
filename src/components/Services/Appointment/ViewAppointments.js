@@ -14,36 +14,26 @@ const ViewAppointments = () => {
 
   const fetchAppointments = async () => {
     try {
-      // const requestOptions = {
-      //   method: 'GET',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     requestContext: {
-      //       authorizer: {
-      //         claims: {
-      //           'cognito:username': 'eyJraWQiOiJLTzRVMWZs' // Replace this with actual username if necessary
-      //         }
-      //       }
-      //     },
-      //     patientEmail: user.email // Using user's email from Firebase
-      //   })
-      // };
-
-      // const response = await fetch('https://fnfgfbcxce.execute-api.eu-north-1.amazonaws.com/prod', requestOptions);
-      
-      // if (response.ok) {
-      //   const data = await response.json();
-      //   setAppointments(JSON.parse(data.body));
 
       const url = `https://fnfgfbcxce.execute-api.eu-north-1.amazonaws.com/prod?patientEmail=${encodeURIComponent(user.email)}`;
       const response = await fetch(url);
 
-      if (response.ok) {
-        const data = await response.json();
-        setAppointments(data); // Assuming the data is already in the correct format
-      } else {
-        console.error('Failed to fetch appointments');
-      }
+      // Make the GET request to the API
+      fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Handle the response data here
+          console.log(data);
+        })
+        .catch(error => {
+          // Handle any errors that occur during the fetch operation
+          console.error('Error:', error);
+        });
       
     } catch (error) {
       console.error('Error fetching appointments:', error);
