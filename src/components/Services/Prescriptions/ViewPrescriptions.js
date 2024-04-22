@@ -14,33 +14,32 @@ const ViewPrescriptions = () => {
 
   const fetchPrescriptions = async () => {
     try {
-      const userEmail = user.email;
-      const requestBody = JSON.stringify({ email: userEmail });
+      const userEmail = user.email; // Get user's email
+      const requestBody = JSON.stringify({ email: userEmail }); // Prepare JSON body
   
       const response = await fetch(`https://a6bomqol5e.execute-api.eu-west-3.amazonaws.com/dev`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: requestBody,
+        body: JSON.stringify({ body: requestBody }), // Ensure correct structure
       });
   
       if (!response.ok) {
-        const responseText = await response.text();
+        const responseText = await response.text(); // Check error details
         throw new Error(`Failed to fetch prescriptions. Response: ${responseText}`);
       }
   
-      const data = await response.json();
-      console.log('Received prescriptions:', data); // Log the data to inspect the content
-  
-      const userPrescriptions = data.prescriptions || [];
-      setPrescriptions(userPrescriptions);
-      setError(null);
+      const data = await response.json(); // Parse response
+      const userPrescriptions = data.prescriptions || []; // Fallback to empty array
+      setPrescriptions(userPrescriptions); // Update state
+      setError(null); // Clear errors if successful
     } catch (error) {
       console.error('Error fetching prescriptions:', error);
-      setError(error.message);
+      setError(error.message); // Set error in case of failure
     }
   };
+  
   
 
   return (
