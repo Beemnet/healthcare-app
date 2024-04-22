@@ -129,7 +129,7 @@ const Navbar = () => {
                                 <MenuItem
                                     bgcolor="primary"
                                     component={HashLink}
-                                    smooth to='/view-prescriptions'
+                                    smooth to='/view-prescriptions#view-prescriptions'
                                 >View Prescriptions
                                 </MenuItem>
 
@@ -212,7 +212,7 @@ const Navbar = () => {
                                 
                             <HashLink
                                 className="text-style text-style-fullscrn "
-                                smooth to='/view-prescriptions'>
+                                smooth to='/view-prescriptions#view-prescriptions'>
                                 <Button
 
                                     sx={{ my: 2, color: 'white', display: 'block' }}
