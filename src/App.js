@@ -19,6 +19,8 @@ import ServiceDetails from './components/Services/ServiceDetails/ServiceDetails'
 import PrivetRoute from './PrivetRoute/PrivetRoute';
 // Import the new component for viewing appointments
 // import ViewAppointments from './components/Services/Appointment/ViewAppointments';
+import ViewPrescriptions from './components/Services/Prescriptions/ViewPrescriptions';
+
 
 // custom style for this application
 export const myTheme = createTheme({
@@ -77,6 +79,10 @@ function App() {
               </Route>
               <PrivetRoute path='/appointment'>
                 <Appointment></Appointment>
+              </PrivetRoute>
+              {/* Add the new route for viewing prescriptions */}
+              <PrivetRoute path='/view-prescriptions'>
+                <ViewPrescriptions />
               </PrivetRoute>
               {/* <PrivetRoute path='/view-appointments'>
                 <ViewAppointments></ViewAppointments>
