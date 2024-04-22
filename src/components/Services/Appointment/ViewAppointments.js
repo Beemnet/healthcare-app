@@ -14,29 +14,37 @@ const ViewAppointments = () => {
 
   const fetchAppointments = async () => {
     try {
-      const requestOptions = {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          requestContext: {
-            authorizer: {
-              claims: {
-                'cognito:username': 'eyJraWQiOiJLTzRVMWZs' // Replace this with actual username if necessary
-              }
-            }
-          },
-          patientEmail: user.email // Using user's email from Firebase
-        })
-      };
+      // const requestOptions = {
+      //   method: 'GET',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({
+      //     requestContext: {
+      //       authorizer: {
+      //         claims: {
+      //           'cognito:username': 'eyJraWQiOiJLTzRVMWZs' // Replace this with actual username if necessary
+      //         }
+      //       }
+      //     },
+      //     patientEmail: user.email // Using user's email from Firebase
+      //   })
+      // };
 
-      const response = await fetch('https://fnfgfbcxce.execute-api.eu-north-1.amazonaws.com/prod', requestOptions);
+      // const response = await fetch('https://fnfgfbcxce.execute-api.eu-north-1.amazonaws.com/prod', requestOptions);
       
+      // if (response.ok) {
+      //   const data = await response.json();
+      //   setAppointments(JSON.parse(data.body));
+
+      const url = `https://fnfgfbcxce.execute-api.eu-north-1.amazonaws.com/prod?patientEmail=${encodeURIComponent(user.email)}`;
+      const response = await fetch(url);
+
       if (response.ok) {
         const data = await response.json();
-        setAppointments(JSON.parse(data.body));
+        setAppointments(data); // Assuming the data is already in the correct format
       } else {
         console.error('Failed to fetch appointments');
       }
+      
     } catch (error) {
       console.error('Error fetching appointments:', error);
     } finally {
