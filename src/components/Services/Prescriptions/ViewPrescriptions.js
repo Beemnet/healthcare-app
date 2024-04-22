@@ -6,7 +6,7 @@ import PrescriptionItem from './PrescriptionItem'; // Component to display indiv
 const ViewPrescriptions = () => {
   const { user } = useAuth(); // Get user information from useAuth
   const [prescriptions, setPrescriptions] = useState([]);
-
+  const [error, setError] = useState(null);
   useEffect(() => {
     fetchPrescriptions();
   }, []); // Fetch data once on component mount
@@ -14,26 +14,29 @@ const ViewPrescriptions = () => {
 
   const fetchPrescriptions = async () => {
     try {
-      const userEmail = user.email; // Logged-in user's email
+      const userEmail = user.email; // Get user's email
+      const requestBody = JSON.stringify({ email: userEmail }); // Prepare JSON body
+  
       const response = await fetch(`https://a6bomqol5e.execute-api.eu-west-3.amazonaws.com/dev`, {
-        method: 'POST', // Using POST to send data to the server
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // Ensure the right content type
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: userEmail }), // Send email in the request body
+        body: JSON.stringify({ body: requestBody }), // Ensure correct structure
       });
-
+  
       if (!response.ok) {
-        throw new Error(`Failed to fetch prescriptions. Status code: ${response.status}`);
+        const responseText = await response.text(); // Check error details
+        throw new Error(`Failed to fetch prescriptions. Response: ${responseText}`);
       }
-
-      const data = await response.json(); // Parse the JSON response
-      const userPrescriptions = data.prescriptions || []; // Default to an empty array
-      setPrescriptions(userPrescriptions); // Update the state with fetched prescriptions
-      setError(null); // Clear any previous errors
+  
+      const data = await response.json(); // Parse response
+      const userPrescriptions = data.prescriptions || []; // Fallback to empty array
+      setPrescriptions(userPrescriptions); // Update state
+      setError(null); // Clear errors if successful
     } catch (error) {
       console.error('Error fetching prescriptions:', error);
-      setError(error.message); // Set the error message in state
+      setError(error.message); // Set error in case of failure
     }
   };
 
