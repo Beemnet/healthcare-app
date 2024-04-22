@@ -1,4 +1,3 @@
-// ViewAppointments.js
 import React, { useState, useEffect } from 'react';
 import { Box, Container, Typography } from '@mui/material';
 import useAuth from '../../../Hooks/useAuth'; // Import useAuth hook
@@ -24,6 +23,8 @@ const ViewAppointments = () => {
       }
     } catch (error) {
       console.error('Error fetching appointments:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -37,9 +38,15 @@ const ViewAppointments = () => {
       <Container maxWidth="xl">
         <Typography variant='h6' sx={{ mt: 5, mb: 5 }}>Your Appointments</Typography>
 
-        {appointments.map(appointment => (
-          <AppointmentItem key={appointment.appointment_id} appointment={appointment} />
-        ))}
+        {loading ? (
+          <Typography>Loading...</Typography>
+        ) : appointments.length === 0 ? (
+          <Typography>No appointments found for {user.displayName}.</Typography>
+        ) : (
+          appointments.map(appointment => (
+            <AppointmentItem key={appointment.appointment_id} appointment={appointment} />
+          ))
+        )}
       </Container>
     </Box>
   );
