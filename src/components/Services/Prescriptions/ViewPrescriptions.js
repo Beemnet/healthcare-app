@@ -11,21 +11,29 @@ const ViewPrescriptions = () => {
     fetchPrescriptions();
   }, []); // Fetch data once on component mount
 
+
   const fetchPrescriptions = async () => {
     try {
-      const response = await fetch('https://your-api-endpoint/prescriptions'); // Replace with your endpoint
-      if (response.ok) {
-        const data = await response.json();
-        // Filter prescriptions by the logged-in user's email
-        const userPrescriptions = data.prescriptions.filter(
-          (prescription) => prescription.email === user.email
-        );
-        setPrescriptions(userPrescriptions); // Set state with filtered prescriptions
-      } else {
-        console.error('Failed to fetch prescriptions');
+      const userEmail = user.email; // Logged-in user's email
+      const response = await fetch(`https://a6bomqol5e.execute-api.eu-west-3.amazonaws.com/dev`, {
+        method: 'POST', // Using POST to send data to the server
+        headers: {
+          'Content-Type': 'application/json', // Ensure the right content type
+        },
+        body: JSON.stringify({ email: userEmail }), // Send email in the request body
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch prescriptions. Status code: ${response.status}`);
       }
+
+      const data = await response.json(); // Parse the JSON response
+      const userPrescriptions = data.prescriptions || []; // Default to an empty array
+      setPrescriptions(userPrescriptions); // Update the state with fetched prescriptions
+      setError(null); // Clear any previous errors
     } catch (error) {
       console.error('Error fetching prescriptions:', error);
+      setError(error.message); // Set the error message in state
     }
   };
 
@@ -43,7 +51,9 @@ const ViewPrescriptions = () => {
           Your Prescriptions
         </Typography>
 
-        {prescriptions.length === 0 ? (
+        {error ? (
+          <Typography color="error">Error: {error}</Typography> // Display error message in case of an error
+        ) : prescriptions.length === 0 ? (
           <Typography>No prescriptions found.</Typography>
         ) : (
           <List>
@@ -56,7 +66,9 @@ const ViewPrescriptions = () => {
         )}
       </Container>
     </Box>
-  );
+  );  
 };
+
+
 
 export default ViewPrescriptions;
