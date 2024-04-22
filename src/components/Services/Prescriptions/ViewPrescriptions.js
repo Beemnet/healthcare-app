@@ -50,8 +50,10 @@ const ViewPrescriptions = () => {
         <Typography variant="h6" sx={{ mt: 5, mb: 5 }}>
           Your Prescriptions
         </Typography>
-  
-        {prescriptions.length === 0 ? (
+
+        {error ? (
+          <Typography color="error">Error: {error}</Typography> // Display error message in case of an error
+        ) : prescriptions.length === 0 ? (
           <Typography>No prescriptions found.</Typography>
         ) : (
           <List>
