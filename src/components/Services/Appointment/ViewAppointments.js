@@ -15,7 +15,7 @@ const ViewAppointments = () => {
   const fetchAppointments = async () => {
     try {
 
-      const url = `https://am4mlhbef8.execute-api.eu-north-1.amazonaws.com/prod?patientEmail=${encodeURIComponent(user.email)}`;
+      const url = `https://am4mlhbef8.execute-api.eu-north-1.amazonaws.com/prod`;
       const requestOptions = {
         method: 'POST',
         headers: {
