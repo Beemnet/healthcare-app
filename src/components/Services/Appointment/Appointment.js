@@ -157,7 +157,7 @@ const Appointment = () => {
           />          
         </form> */}
 
-      <Container maxWidth="sm">
+      <Container maxWidth="sm" sx={{ mt: 2, mb: 2, ml: 5, mr: 5 }}>
         <Typography variant='h6' sx={{ mt: 5, mb: 5 }}>Schedule Appointment</Typography>
         
           <DatePicker
