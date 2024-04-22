@@ -119,6 +119,12 @@ const Navbar = () => {
                                     smooth to='/appointment#appointment'
                                 >Appointment
                                 </MenuItem>
+                                <MenuItem
+                                    bgcolor="primary"
+                                    component={HashLink}
+                                    smooth to='/view-appointments'
+                                >View Appointments
+                                </MenuItem>
 
                                 <MenuItem
                                     bgcolor="primary"

@@ -17,7 +17,6 @@ import Doctors from './components/Services/Doctors/Doctors';
 import Appointment from './components/Services/Appointment/Appointment';
 import ServiceDetails from './components/Services/ServiceDetails/ServiceDetails';
 import PrivetRoute from './PrivetRoute/PrivetRoute';
-// Import the new component for viewing appointments
 import ViewAppointments from './components/Services/Appointment/ViewAppointments';
 
 // custom style for this application

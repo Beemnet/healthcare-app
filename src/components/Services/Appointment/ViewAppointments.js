@@ -15,7 +15,7 @@ const ViewAppointments = () => {
   const fetchAppointments = async () => {
     try {
       const requestOptions = {
-        method: 'POST',
+        method: 'GET',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           requestContext: {

@@ -156,19 +156,10 @@ const Appointment = () => {
             onChange={(time) => setSelectedTime(time)}
           />          
         </form> */}
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-      }}
-    >
+
       <Container maxWidth="sm">
         <Typography variant='h6' sx={{ mt: 5, mb: 5 }}>Schedule Appointment</Typography>
-
-        <form onSubmit={handleSubmit}>
+        
           <DatePicker
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}
@@ -176,15 +167,14 @@ const Appointment = () => {
             placeholderText="Select a date"
             className="date-picker"
           />
-
+        
           <TimePicker
             value={selectedTime}
             onChange={(time) => setSelectedTime(time)}
             className="time-picker"
           />
-        </form>
+        
       </Container>
-    </Box>
 
         <TextField
           sx={{ mt: 2, mb: 2 }}
