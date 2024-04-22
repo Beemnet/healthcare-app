@@ -15,26 +15,24 @@ const ViewAppointments = () => {
   const fetchAppointments = async () => {
     try {
 
-      const url = `https://fnfgfbcxce.execute-api.eu-north-1.amazonaws.com/prod?patientEmail=${encodeURIComponent(user.email)}`;
-      const response = await fetch(url);
-
-      // Make the GET request to the API
-      fetch(url)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
+      const url = `https://am4mlhbef8.execute-api.eu-north-1.amazonaws.com/prod?patientEmail=${encodeURIComponent(user.email)}`;
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: user.email
         })
-        .then(data => {
-          // Handle the response data here
-          console.log(data);
-        })
-        .catch(error => {
-          // Handle any errors that occur during the fetch operation
-          console.error('Error:', error);
-        });
-      
+      };
+  
+      const response = await fetch(url, requestOptions);
+      if (response.ok) {
+        const data = await response.json();
+        setAppointments(data.appointments); // Assuming your response structure includes an 'appointments' field
+      } else {
+        console.error('Failed to fetch appointments:', response.statusText);
+      }
     } catch (error) {
       console.error('Error fetching appointments:', error);
     } finally {
