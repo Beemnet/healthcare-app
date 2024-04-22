@@ -29,7 +29,13 @@ const ViewAppointments = () => {
       const response = await fetch(url, requestOptions);
       if (response.ok) {
         const data = await response.json();
-        setAppointments(data.appointments); // Assuming your response structure includes an 'appointments' field
+        // Debugging log
+        
+        const appointmentsData = JSON.parse(data.body);
+        const appointmentsArray = appointmentsData.appointments;
+        console.log('Fetched appointments:', appointmentsArray); 
+        setAppointments(appointmentsArray);
+
       } else {
         console.error('Failed to fetch appointments:', response.statusText);
       }
@@ -58,17 +64,9 @@ const ViewAppointments = () => {
           <Typography>No appointments found for {user.displayName}.</Typography>
         ) : (
           <>
-            {Array.isArray(appointments) && (
-              (() => {
-                const appointmentItems = [];
-                for (let i = 0; i < appointments.length; i++) {
-                  appointmentItems.push(
-                    <AppointmentItem key={appointments[i].appointment_id} appointment={appointments[i]} />
-                  );
-                }
-                return appointmentItems;
-              })()
-            )}
+            {appointments.map(appointment => (
+              <AppointmentItem key={appointment.appointment_id} appointment={appointment} />
+            ))}
           </>
         )}
       </Container>
