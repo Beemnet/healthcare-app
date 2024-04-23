@@ -13,7 +13,7 @@ const PrescriptionItem = ({ prescription }) => {
     >
       <Typography variant="subtitle1">Doctor: {doctor}</Typography>
       <Typography variant="body2">Prescription: {prescriptionText}</Typography> {/* Corrected field */}
-      <Typography variant="body2">Date: {new Date(date).toLocaleDateString()}</Typography> {/* Formatted date */}
+      <Typography variant="body2">Date: {date}</Typography> {/* Formatted date */}
     </Box>
   );
 };

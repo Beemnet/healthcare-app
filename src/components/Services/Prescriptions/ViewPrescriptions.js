@@ -7,6 +7,8 @@ const ViewPrescriptions = () => {
   const { user } = useAuth(); // Get user information from useAuth
   const [prescriptions, setPrescriptions] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     fetchPrescriptions();
   }, []); // Fetch data once on component mount
@@ -29,17 +31,23 @@ const ViewPrescriptions = () => {
         const responseText = await response.text(); // Check error details
         throw new Error(`Failed to fetch prescriptions. Response: ${responseText}`);
       }
-  
+      
+      
       const data = await response.json(); // Parse response
-      const userPrescriptions = data.prescriptions || []; // Fallback to empty array
-      setPrescriptions(userPrescriptions); // Update state
+      
+      const prescriptionsData = JSON.parse(data.body);
+      const prescriptionsArray = prescriptionsData.prescriptions;
+      console.log('Fetched prescriptions:', prescriptionsArray); 
+      setPrescriptions(prescriptionsArray);
+
       setError(null); // Clear errors if successful
     } catch (error) {
       console.error('Error fetching prescriptions:', error);
       setError(error.message); // Set error in case of failure
+    } finally {
+      setLoading(false);
     }
   };
-  
   
 
   return (
@@ -56,24 +64,24 @@ const ViewPrescriptions = () => {
           Your Prescriptions
         </Typography>
 
-        {error ? (
-          <Typography color="error">Error: {error}</Typography> // Display error message in case of an error
+        {loading ? (
+          <Typography>Loading...</Typography>
         ) : prescriptions.length === 0 ? (
-          <Typography>No prescriptions found.</Typography>
+          <Typography>No prescriptions found for {user.displayName}.</Typography>
         ) : (
-          <List>
-            {prescriptions.map((prescription) => (
+          <><List>
+            {prescriptions.map(prescription => (
               <ListItem key={prescription.prescription_id}>
                 <PrescriptionItem prescription={prescription} />
               </ListItem>
             ))}
-          </List>
+            </List>
+          </>
         )}
+
       </Container>
     </Box>
   );  
 };
-
-
 
 export default ViewPrescriptions;
