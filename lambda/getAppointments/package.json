@@ -1,0 +1,18 @@
+{
+  "name": "lambda",
+  "version": "1.0.0",
+  "description": "Lambda function for interacting with DynamoDB and ElastiCache Redis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/signature-v4": "^3.374.0",
+    "@aws-sdk/types": "^3.535.0",
+    "aws-sdk": "^2.1120.0",
+    "node-cache": "^5.1.2",
+    "redis": "^4.0.0"
+  }
+}
